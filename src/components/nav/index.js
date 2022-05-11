@@ -1,14 +1,23 @@
 import React from "react";
 import { MENU } from "./memu";
-import "./nav.scss";
+import { TabBar } from "antd-mobile";
+import { useNavigate, useLocation } from "react-router-dom";
 
 const Nav = () => {
+  const location = useLocation();
+  const { pathname } = location;
+  const navigate = useNavigate();
+
+  const setRouteActive = (value) => {
+    navigate(value);
+  };
+
   return (
-    <div className="nav">
-      {MENU.map((item) => {
-        return <span>{item.title}</span>;
-      })}
-    </div>
+    <TabBar activeKey={pathname} onChange={(value) => setRouteActive(value)}>
+      {MENU.map((item) => (
+        <TabBar.Item key={item.key} icon={item.icon} title={item.title} />
+      ))}
+    </TabBar>
   );
 };
 
